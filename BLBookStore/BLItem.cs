@@ -9,32 +9,32 @@ namespace BLBookStore
 {
     public class BLItem : IItem
     {
-        private IItem Itemobj;
+        private IItem Itemobj1;
         public BLItem(IItem Itemobj)
         {
-            this.Itemobj = Itemobj;
+            this.Itemobj1 = Itemobj;
         }
         public void Add(Item objItem)
         {
-            Itemobj.Add(objItem);
+            Itemobj1.Add(objItem);
         }
         public void Update(Item objItem)
         {
-            Itemobj.Update(objItem);
+            Itemobj1.Update(objItem);
         }
         public void Delete(Item objItem)
         {
-            Itemobj.Delete(objItem);
+            Itemobj1.Delete(objItem);
         }
 
         public List<Item> Load()
         {
-           return Itemobj.Load();
+           return Itemobj1.Load();
         }
 
         public List<Item> Search(Item objItem)
         {
-            return Itemobj.Search(objItem);
+            return Itemobj1.Search(objItem);
         }
 
       

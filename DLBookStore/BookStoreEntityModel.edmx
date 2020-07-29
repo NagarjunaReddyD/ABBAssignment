@@ -1,0 +1,508 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="TwinkleStoreModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CustomerItemsHistory">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" />
+          <Property Name="FirstName" Type="varchar" MaxLength="50" />
+          <Property Name="LastName" Type="varchar" MaxLength="50" />
+          <Property Name="PhoneNumber" Type="varchar" MaxLength="15" />
+          <Property Name="EmailId" Type="varchar" MaxLength="50" />
+          <Property Name="Address" Type="varchar" MaxLength="500" />
+          <Property Name="DOB" Type="datetime" />
+          <Property Name="city" Type="varchar" MaxLength="30" />
+          <Property Name="state" Type="varchar" MaxLength="30" />
+          <Property Name="IsMembership" Type="char" MaxLength="1" />
+          <Property Name="ItemsName" Type="varchar(max)" />
+          <Property Name="Price" Type="money" />
+          <Property Name="DateOfPurchase" Type="datetime" />
+          <Property Name="NoOfItems" Type="int" />
+          <Property Name="Total" Type="money" />
+        </EntityType>
+        <EntityType Name="Items">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" />
+          <Property Name="Price" Type="money" />
+        </EntityType>
+        <EntityType Name="Login">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="varchar" MaxLength="50" />
+          <Property Name="Password" Type="varchar" MaxLength="50" />
+          <Property Name="enabled" Type="char" MaxLength="1" />
+        </EntityType>
+        <EntityType Name="Roles">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="UserDetails">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" />
+          <Property Name="FirstName" Type="varchar" MaxLength="50" />
+          <Property Name="LastName" Type="varchar" MaxLength="50" />
+          <Property Name="PhoneNumber" Type="varchar" MaxLength="15" />
+          <Property Name="EmailId" Type="varchar" MaxLength="50" />
+          <Property Name="Address" Type="varchar" MaxLength="500" />
+          <Property Name="DOB" Type="datetime" />
+          <Property Name="city" Type="varchar" MaxLength="30" />
+          <Property Name="state" Type="varchar" MaxLength="30" />
+          <Property Name="IsMembership" Type="char" MaxLength="1" />
+        </EntityType>
+        <EntityType Name="UserItems">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" />
+          <Property Name="ItemId" Type="int" />
+          <Property Name="DateOfPurchase" Type="datetime" />
+          <Property Name="NoOfItems" Type="int" />
+          <Property Name="DiscAmmount" Type="money" />
+          <Property Name="NetAmount" Type="money" />
+        </EntityType>
+        <EntityType Name="UserRoles">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" />
+          <Property Name="RoleId" Type="int" />
+        </EntityType>
+        <Association Name="FK__UserItems__ItemI__540C7B00">
+          <End Role="Items" Type="Self.Items" Multiplicity="0..1" />
+          <End Role="UserItems" Type="Self.UserItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Items">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="UserItems">
+              <PropertyRef Name="ItemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UserItems__UserI__531856C7">
+          <End Role="UserDetails" Type="Self.UserDetails" Multiplicity="0..1" />
+          <End Role="UserItems" Type="Self.UserItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserDetails">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="UserItems">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UserRoles__RoleI__4E53A1AA">
+          <End Role="Roles" Type="Self.Roles" Multiplicity="0..1" />
+          <End Role="UserRoles" Type="Self.UserRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="UserRoles">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UserRoles__UserI__4D5F7D71">
+          <End Role="Login" Type="Self.Login" Multiplicity="0..1" />
+          <End Role="UserRoles" Type="Self.UserRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Login">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="UserRoles">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="usp_AnualCustBilling" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="usp_Qualified20Discount" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CustId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="usp_UpCmgBdayCust" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <EntityContainer Name="TwinkleStoreModelStoreContainer">
+          <EntitySet Name="CustomerItemsHistory" EntityType="Self.CustomerItemsHistory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Items" EntityType="Self.Items" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Login" EntityType="Self.Login" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserDetails" EntityType="Self.UserDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserItems" EntityType="Self.UserItems" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserRoles" EntityType="Self.UserRoles" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__UserItems__ItemI__540C7B00" Association="Self.FK__UserItems__ItemI__540C7B00">
+            <End Role="Items" EntitySet="Items" />
+            <End Role="UserItems" EntitySet="UserItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UserItems__UserI__531856C7" Association="Self.FK__UserItems__UserI__531856C7">
+            <End Role="UserDetails" EntitySet="UserDetails" />
+            <End Role="UserItems" EntitySet="UserItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UserRoles__RoleI__4E53A1AA" Association="Self.FK__UserRoles__RoleI__4E53A1AA">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="UserRoles" EntitySet="UserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UserRoles__UserI__4D5F7D71" Association="Self.FK__UserRoles__UserI__4D5F7D71">
+            <End Role="Login" EntitySet="Login" />
+            <End Role="UserRoles" EntitySet="UserRoles" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TwinkleStoreModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="TwinkleStoreEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CustomerItemsHistories" EntityType="TwinkleStoreModel.CustomerItemsHistory" />
+          <EntitySet Name="Items" EntityType="TwinkleStoreModel.Item" />
+          <EntitySet Name="Logins" EntityType="TwinkleStoreModel.Login" />
+          <EntitySet Name="Roles" EntityType="TwinkleStoreModel.Role" />
+          <EntitySet Name="UserDetails" EntityType="TwinkleStoreModel.UserDetail" />
+          <EntitySet Name="UserItems" EntityType="TwinkleStoreModel.UserItem" />
+          <EntitySet Name="UserRoles" EntityType="TwinkleStoreModel.UserRole" />
+          <AssociationSet Name="FK__UserItems__ItemI__540C7B00" Association="TwinkleStoreModel.FK__UserItems__ItemI__540C7B00">
+            <End Role="Item" EntitySet="Items" />
+            <End Role="UserItem" EntitySet="UserItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UserRoles__UserI__4D5F7D71" Association="TwinkleStoreModel.FK__UserRoles__UserI__4D5F7D71">
+            <End Role="Login" EntitySet="Logins" />
+            <End Role="UserRole" EntitySet="UserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UserRoles__RoleI__4E53A1AA" Association="TwinkleStoreModel.FK__UserRoles__RoleI__4E53A1AA">
+            <End Role="Role" EntitySet="Roles" />
+            <End Role="UserRole" EntitySet="UserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UserItems__UserI__531856C7" Association="TwinkleStoreModel.FK__UserItems__UserI__531856C7">
+            <End Role="UserDetail" EntitySet="UserDetails" />
+            <End Role="UserItem" EntitySet="UserItems" />
+          </AssociationSet>
+          <FunctionImport Name="usp_Qualified20Discount" ReturnType="Collection(String)">
+          <Parameter Name="CustId" Mode="In" Type="Int32" />
+          </FunctionImport>
+         
+          <FunctionImport Name="usp_UpCmgBdayCust" ReturnType="Collection(TwinkleStoreModel.usp_UpCmgBdayCust_Result)" />
+          <FunctionImport Name="usp_AnualCustBilling" ReturnType="Collection(TwinkleStoreModel.usp_AnualCustBilling_Result)" />
+       
+        </EntityContainer>
+        <EntityType Name="CustomerItemsHistory">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="EmailId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Address" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="DOB" Type="DateTime" Precision="3" />
+          <Property Name="city" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="state" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="IsMembership" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="ItemsName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="DateOfPurchase" Type="DateTime" Precision="3" />
+          <Property Name="NoOfItems" Type="Int32" />
+          <Property Name="Total" Type="Decimal" Precision="19" Scale="4" />
+        </EntityType>
+        <EntityType Name="Item">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
+          <NavigationProperty Name="UserItems" Relationship="TwinkleStoreModel.FK__UserItems__ItemI__540C7B00" FromRole="Item" ToRole="UserItem" />
+        </EntityType>
+        <EntityType Name="Login">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="enabled" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="UserRoles" Relationship="TwinkleStoreModel.FK__UserRoles__UserI__4D5F7D71" FromRole="Login" ToRole="UserRole" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="UserRoles" Relationship="TwinkleStoreModel.FK__UserRoles__RoleI__4E53A1AA" FromRole="Role" ToRole="UserRole" />
+        </EntityType>
+        <EntityType Name="UserDetail">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="EmailId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Address" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="DOB" Type="DateTime" Precision="3" />
+          <Property Name="city" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="state" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="IsMembership" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="UserItems" Relationship="TwinkleStoreModel.FK__UserItems__UserI__531856C7" FromRole="UserDetail" ToRole="UserItem" />
+        </EntityType>
+        <EntityType Name="UserItem">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="ItemId" Type="Int32" />
+          <Property Name="DateOfPurchase" Type="DateTime" Precision="3" />
+          <Property Name="NoOfItems" Type="Int32" />
+          <NavigationProperty Name="Item" Relationship="TwinkleStoreModel.FK__UserItems__ItemI__540C7B00" FromRole="UserItem" ToRole="Item" />
+          <NavigationProperty Name="UserDetail" Relationship="TwinkleStoreModel.FK__UserItems__UserI__531856C7" FromRole="UserItem" ToRole="UserDetail" />
+          <Property Name="DiscAmmount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="NetAmount" Type="Decimal" Precision="19" Scale="4" />
+        </EntityType>
+        <EntityType Name="UserRole">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="RoleId" Type="Int32" />
+          <NavigationProperty Name="Login" Relationship="TwinkleStoreModel.FK__UserRoles__UserI__4D5F7D71" FromRole="UserRole" ToRole="Login" />
+          <NavigationProperty Name="Role" Relationship="TwinkleStoreModel.FK__UserRoles__RoleI__4E53A1AA" FromRole="UserRole" ToRole="Role" />
+        </EntityType>
+        <Association Name="FK__UserItems__ItemI__540C7B00">
+          <End Type="TwinkleStoreModel.Item" Role="Item" Multiplicity="0..1" />
+          <End Type="TwinkleStoreModel.UserItem" Role="UserItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Item">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="UserItem">
+              <PropertyRef Name="ItemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UserRoles__UserI__4D5F7D71">
+          <End Type="TwinkleStoreModel.Login" Role="Login" Multiplicity="0..1" />
+          <End Type="TwinkleStoreModel.UserRole" Role="UserRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Login">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="UserRole">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UserRoles__RoleI__4E53A1AA">
+          <End Type="TwinkleStoreModel.Role" Role="Role" Multiplicity="0..1" />
+          <End Type="TwinkleStoreModel.UserRole" Role="UserRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="UserRole">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UserItems__UserI__531856C7">
+          <End Type="TwinkleStoreModel.UserDetail" Role="UserDetail" Multiplicity="0..1" />
+          <End Type="TwinkleStoreModel.UserItem" Role="UserItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserDetail">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="UserItem">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="usp_UpCmgBdayCust_Result">
+          <Property Type="Int32" Name="id" Nullable="false" />
+          <Property Type="Int32" Name="UserId" Nullable="true" />
+          <Property Type="String" Name="FirstName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="LastName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="PhoneNumber" Nullable="true" MaxLength="15" />
+          <Property Type="String" Name="EmailId" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Address" Nullable="true" MaxLength="500" />
+          <Property Type="DateTime" Name="DOB" Nullable="true" Precision="23" />
+          <Property Type="String" Name="city" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="state" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="IsMembership" Nullable="true" MaxLength="1" />
+        </ComplexType>
+        <ComplexType Name="usp_AnualCustBilling_Result">
+          <Property Type="String" Name="FirstName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="LastName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="PhoneNumber" Nullable="true" MaxLength="15" />
+          <Property Type="DateTime" Name="DOB" Nullable="true" Precision="23" />
+          <Property Type="String" Name="EmailId" Nullable="true" MaxLength="50" />
+          <Property Type="Decimal" Name="TotalAmount" Nullable="true" Precision="19" />
+        </ComplexType>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="TwinkleStoreModelStoreContainer" CdmEntityContainer="TwinkleStoreEntities">
+          <EntitySetMapping Name="CustomerItemsHistories">
+            <EntityTypeMapping TypeName="TwinkleStoreModel.CustomerItemsHistory">
+              <MappingFragment StoreEntitySet="CustomerItemsHistory">
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="NoOfItems" ColumnName="NoOfItems" />
+                <ScalarProperty Name="DateOfPurchase" ColumnName="DateOfPurchase" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="ItemsName" ColumnName="ItemsName" />
+                <ScalarProperty Name="IsMembership" ColumnName="IsMembership" />
+                <ScalarProperty Name="state" ColumnName="state" />
+                <ScalarProperty Name="city" ColumnName="city" />
+                <ScalarProperty Name="DOB" ColumnName="DOB" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="EmailId" ColumnName="EmailId" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Items">
+            <EntityTypeMapping TypeName="TwinkleStoreModel.Item">
+              <MappingFragment StoreEntitySet="Items">
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Logins">
+            <EntityTypeMapping TypeName="TwinkleStoreModel.Login">
+              <MappingFragment StoreEntitySet="Login">
+                <ScalarProperty Name="enabled" ColumnName="enabled" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="TwinkleStoreModel.Role">
+              <MappingFragment StoreEntitySet="Roles">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserDetails">
+            <EntityTypeMapping TypeName="TwinkleStoreModel.UserDetail">
+              <MappingFragment StoreEntitySet="UserDetails">
+                <ScalarProperty Name="IsMembership" ColumnName="IsMembership" />
+                <ScalarProperty Name="state" ColumnName="state" />
+                <ScalarProperty Name="city" ColumnName="city" />
+                <ScalarProperty Name="DOB" ColumnName="DOB" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="EmailId" ColumnName="EmailId" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserItems">
+            <EntityTypeMapping TypeName="TwinkleStoreModel.UserItem">
+              <MappingFragment StoreEntitySet="UserItems">
+                <ScalarProperty Name="NetAmount" ColumnName="NetAmount" />
+                <ScalarProperty Name="DiscAmmount" ColumnName="DiscAmmount" />
+                <ScalarProperty Name="NoOfItems" ColumnName="NoOfItems" />
+                <ScalarProperty Name="DateOfPurchase" ColumnName="DateOfPurchase" />
+                <ScalarProperty Name="ItemId" ColumnName="ItemId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserRoles">
+            <EntityTypeMapping TypeName="TwinkleStoreModel.UserRole">
+              <MappingFragment StoreEntitySet="UserRoles">
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="usp_Qualified20Discount" FunctionName="TwinkleStoreModel.Store.usp_Qualified20Discount" />
+          <FunctionImportMapping FunctionImportName="usp_UpCmgBdayCust" FunctionName="TwinkleStoreModel.Store.usp_UpCmgBdayCust">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TwinkleStoreModel.usp_UpCmgBdayCust_Result">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="EmailId" ColumnName="EmailId" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="DOB" ColumnName="DOB" />
+                <ScalarProperty Name="city" ColumnName="city" />
+                <ScalarProperty Name="state" ColumnName="state" />
+                <ScalarProperty Name="IsMembership" ColumnName="IsMembership" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="usp_AnualCustBilling" FunctionName="TwinkleStoreModel.Store.usp_AnualCustBilling">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TwinkleStoreModel.usp_AnualCustBilling_Result">
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="DOB" ColumnName="DOB" />
+                <ScalarProperty Name="EmailId" ColumnName="EmailId" />
+                <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

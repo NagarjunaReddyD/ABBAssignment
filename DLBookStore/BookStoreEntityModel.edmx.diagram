@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="7a242f3869124f3fb5939cb5c5e3be24" Name="Diagram1" ZoomLevel="67">
+        <EntityTypeShape EntityType="TwinkleStoreModel.CustomerItemsHistory" Width="1.5" PointX="5.375" PointY="0.75" />
+        <EntityTypeShape EntityType="TwinkleStoreModel.Item" Width="1.5" PointX="5.75" PointY="6.25" />
+        <EntityTypeShape EntityType="TwinkleStoreModel.Login" Width="1.5" PointX="0.75" PointY="5.875" />
+        <EntityTypeShape EntityType="TwinkleStoreModel.Role" Width="1.5" PointX="0.75" PointY="3.125" />
+        <EntityTypeShape EntityType="TwinkleStoreModel.UserDetail" Width="1.5" PointX="5.75" PointY="9.5" />
+        <EntityTypeShape EntityType="TwinkleStoreModel.UserItem" Width="1.5" PointX="8" PointY="6" />
+        <EntityTypeShape EntityType="TwinkleStoreModel.UserRole" Width="1.5" PointX="3" PointY="5.875" />
+        <AssociationConnector Association="TwinkleStoreModel.FK__UserItems__ItemI__540C7B00" />
+        <AssociationConnector Association="TwinkleStoreModel.FK__UserRoles__UserI__4D5F7D71" />
+        <AssociationConnector Association="TwinkleStoreModel.FK__UserRoles__RoleI__4E53A1AA" />
+        <AssociationConnector Association="TwinkleStoreModel.FK__UserItems__UserI__531856C7" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
